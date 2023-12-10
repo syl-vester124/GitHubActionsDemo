@@ -1,25 +1,13 @@
-name: CI
+# Name of workflow
+name: PR workflow for shell scripts
 
-on: [push]
+# Trigger workflow on pull requests only
+on: pull_request
 
+# Configure the jobs that the workflow must complete
 jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-18.04
-    strategy:
-      matrix:
-        node_version: [10, 12]
-
+  execute-script:
+    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Use Node.js ${{ matrix.node_version }}
-      uses: actions/setup-node@v1
-      with:
-        version: ${{ matrix.node_version }}
-
-    - name: yarn install, yarn lint, yarn test, yarn build
-      run: |
-        yarn install
-        yarn lint
-        yarn test
-        yarn build
+    - name: Execute shell script
+      run: ./test_script.sh
